@@ -1,4 +1,4 @@
-# learnSSH
+# learnSSH mysql的配套实例:database ssh,其下table customer,包含custname(unique) char(20),pwd char(45),age int,address char(45)
 这是一个用来学习SSH三大框架的仓库。
 由于版权原因，没有直接把随书源码传上来，仓库记录的是自己学习每章时改写的代码。
 下面写下学习过程的记录。</br>

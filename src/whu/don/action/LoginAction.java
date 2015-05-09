@@ -1,6 +1,7 @@
 package whu.don.action;
 
-import whu.don.model.LoginModel;
+import whu.don.dao.CustomerDAOImpl;
+import whu.don.service.CustomerServiceImpl;
 
 public class LoginAction {
 	private String custname;
@@ -18,8 +19,10 @@ public class LoginAction {
 		this.pwd = pwd;
 	}
 	public String execute(){
-		LoginModel ls=new LoginModel();
-		boolean flag=ls.login(custname, pwd);
+		CustomerServiceImpl cs=new CustomerServiceImpl();
+		cs.setDao(new CustomerDAOImpl());
+		
+		boolean flag=cs.login(custname, pwd);
 		if(flag){
 			return "success";
 		}else{

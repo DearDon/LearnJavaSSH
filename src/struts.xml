@@ -10,5 +10,14 @@
 			<result name="success">/welcome.jsp</result>
 			<result name="fail">/indexagain.jsp</result>
 		</action>
+		
+		<action name="Register" class="whu.don.action.RegisterAction">
+			<result name="regsuccess">/index.jsp</result>
+			<result name="regfail">/register.jsp</result>
+		</action>
+		
+		<action name="ViewAll" class="whu.don.action.ViewAllAction">
+			<result name="success">/allcustomers.jsp</result>
+		</action>
 	</package>
 </struts>

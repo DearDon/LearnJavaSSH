@@ -9,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'register.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,15 +19,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-    <%@taglib uri="/struts-tags" prefix="s" %>
-    <a href="/learnSSH/register.jsp">Regist Now.</a>
-    <s:form action="Login">
+    <%@taglib uri="/struts-tags" prefix="s" %> 
+    <s:form action="Register">
     	<s:textfield name="custname" label="Input your custname"></s:textfield>
     	<s:password name="pwd" label="Input your password"></s:password>
-    	<s:submit value="Login"></s:submit> 	
+    	<s:textfield name="age" label="Input your age"></s:textfield>
+    	<s:textfield name="address" label="Input your address"></s:textfield>
+    	<s:submit value="Register"></s:submit> 	
     </s:form>
   </body>
 </html>

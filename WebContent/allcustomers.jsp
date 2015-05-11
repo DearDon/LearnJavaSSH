@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*,whu.don.vo.*" pageEncoding="ISO-8859-1"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'allusers.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,15 +19,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
-  <body>
-    <%@taglib uri="/struts-tags" prefix="s" %>
-    <a href="/learnSSH/register.jsp">Regist Now.</a>
-    <s:form action="Login">
-    	<s:textfield name="custname" label="Input your custname"></s:textfield>
-    	<s:password name="pwd" label="Input your password"></s:password>
-    	<s:submit value="Login"></s:submit> 	
-    </s:form>
+ <body>
+ 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ All Customers:<br>
+<table width="200" border="1">
+<tbody>
+	<tr>
+	<td>&nbsp;Custname</td>
+	<td>&nbsp;age</td>
+	<td>address&nbsp;</td>
+	</tr>
+	<c:forEach items="${allcustomers}" var="c">
+	<tr>
+	<td>${c.custname}</td>
+	<td>${c.age}</td>
+	<td>${c.address}</td>
+	</tr>
+	</c:forEach>
+	
+</tbody></table><br>
   </body>
 </html>

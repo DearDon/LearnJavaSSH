@@ -7,6 +7,7 @@
 <title>Loign Success,welcome</title>
 </head>
 <body>
-	Welcome,${param.custname}
+	Welcome,${param.custname}</br>
+	<a href="ViewAll.action">View All Customers.</a>
 </body>
 </html>

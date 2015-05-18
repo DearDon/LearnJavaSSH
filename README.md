@@ -1,7 +1,7 @@
 # learnSSH 
 这是一个用来学习SSH三大框架的仓库。</br>
 由于版权原因，没有直接把随书源码传上来，仓库记录的是自己学习每章时改写的代码。</br>
-下面写下学习过程的记录。
+下面写下学习过程的记录。学习基于电子工业出版社的《JavaEE主流开源框架》一书第一版。
 ###案例中用的mysql的配套数据库表:
 database ssh,其下table customer,包含custname(unique) char(20),pwd char(45),age int,address char(45)</br>
 ###log01(2015/05/08):

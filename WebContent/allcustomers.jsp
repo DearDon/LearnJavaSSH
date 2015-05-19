@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,whu.don.vo.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*,whu.don.vo.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,8 +24,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body>
  
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
- All Customers:<br>
+
+<%@taglib uri="/struts-tags" prefix="s" %>
+ <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <s:text name="show.info"></s:text>:<br>
+
 <table width="200" border="1">
 <tbody>
 	<tr>

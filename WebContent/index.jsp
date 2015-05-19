@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,11 +22,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <%@taglib uri="/struts-tags" prefix="s" %>
-    <a href="/learnSSH/register.jsp">Regist Now.</a>
+    <a href="/learnSSH/register.jsp"><s:text name="register.url"></s:text><br></a>
     <s:form action="Login">
-    	<s:textfield name="custname" label="Input your custname"></s:textfield>
-    	<s:password name="pwd" label="Input your password"></s:password>
-    	<s:submit value="Login"></s:submit> 	
+    	<s:textfield name="custname" key="custname.label"></s:textfield>
+    	<s:password name="pwd" key="pwd.label"></s:password>
+    	<s:submit key="login.button"></s:submit> 	
     </s:form>
+    <s:actionerror/>
   </body>
 </html>

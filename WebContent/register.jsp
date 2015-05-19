@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,12 +24,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <%@taglib uri="/struts-tags" prefix="s" %> 
+    <s:text name="register.info"></s:text><br>
     <s:form action="Register">
-    	<s:textfield name="custname" label="Input your custname"></s:textfield>
-    	<s:password name="pwd" label="Input your password"></s:password>
-    	<s:textfield name="age" label="Input your age"></s:textfield>
-    	<s:textfield name="address" label="Input your address"></s:textfield>
-    	<s:submit value="Register"></s:submit> 	
+    	<s:textfield name="custname" key="custname.label"></s:textfield>
+    	<s:password name="pwd" key="pwd.label"></s:password>
+    	<s:textfield name="age" key="age.label"></s:textfield>
+    	<s:textfield name="address" key="address.label"></s:textfield>
+    	<s:submit key="register.button"></s:submit> 	
     </s:form>
   </body>
 </html>

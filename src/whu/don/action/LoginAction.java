@@ -2,8 +2,9 @@ package whu.don.action;
 
 import whu.don.dao.CustomerDAOImpl;
 import whu.don.service.CustomerServiceImpl;
+import com.opensymphony.xwork2.ActionSupport;
 
-public class LoginAction {
+public class LoginAction extends ActionSupport {
 	private String custname;
 	private String pwd;
 	public String getCustname() {
@@ -26,6 +27,8 @@ public class LoginAction {
 		if(flag){
 			return "success";
 		}else{
+			//this.addActionMessage(this.getText("Your password or account is wrong, try again!"));
+			this.addActionError(this.getText("pwd.wrong"));
 			return "fail";
 		}
 	}

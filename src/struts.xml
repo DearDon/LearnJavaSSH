@@ -9,6 +9,7 @@
 		<action name="Login" class="whu.don.action.LoginAction">
 			<result name="success">/welcome.jsp</result>
 			<result name="fail">/index.jsp</result>
+			<result name="input">/index.jsp</result>
 		</action>
 		
 		<action name="Register" class="whu.don.action.RegisterAction">

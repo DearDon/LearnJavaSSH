@@ -7,6 +7,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  <%@taglib uri="/struts-tags" prefix="s" %> 
+  <s:head theme="ajax"/>
     <base href="<%=basePath%>">
     
     <title>My JSP 'register.jsp' starting page</title>
@@ -23,9 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <%@taglib uri="/struts-tags" prefix="s" %> 
+    
     <s:text name="register.info"></s:text><br>
-    <s:form action="Register">
+    <s:form action="Register" validate="true" theme="ajax">
     	<s:textfield name="custname" key="custname.label"></s:textfield>
     	<s:password name="pwd" key="pwd.label"></s:password>
     	<s:textfield name="age" key="age.label"></s:textfield>

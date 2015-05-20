@@ -2,6 +2,7 @@ package whu.don.action;
 
 import whu.don.dao.CustomerDAOImpl;
 import whu.don.service.CustomerServiceImpl;
+import whu.don.vo.Customer;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport {
@@ -18,6 +19,14 @@ public class LoginAction extends ActionSupport {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	
+	public void validate(){
+		CustomerDAOImpl dao=new CustomerDAOImpl();
+		Customer c=dao.selectByName(custname);
+		if(c==null){
+			this.addFieldError("custname", this.getText("custname.notexist"));
+		}
 	}
 	public String execute(){
 		CustomerServiceImpl cs=new CustomerServiceImpl();

@@ -14,6 +14,7 @@
 		<action name="Register" class="whu.don.action.RegisterAction">
 			<result name="regsuccess">/index.jsp</result>
 			<result name="regfail">/register.jsp</result>
+			<result name="input">/register.jsp</result>
 		</action>
 		
 		<action name="ViewAll" class="whu.don.action.ViewAllAction">

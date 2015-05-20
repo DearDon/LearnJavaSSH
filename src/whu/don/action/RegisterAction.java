@@ -4,8 +4,9 @@ import whu.don.dao.CustomerDAOImpl;
 import whu.don.exception.RegisterException;
 import whu.don.service.CustomerServiceImpl;
 import whu.don.vo.Customer;
+import com.opensymphony.xwork2.ActionSupport;
 
-public class RegisterAction {
+public class RegisterAction extends ActionSupport {
 	private String custname;
 	private String pwd;
 	private Integer age;
@@ -34,7 +35,13 @@ public class RegisterAction {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+	public void validate(){
+		CustomerDAOImpl dao=new CustomerDAOImpl();
+		Customer c=dao.selectByName(custname);
+		if(c!=null){
+			this.addFieldError("custname",this.getText("custname.exist"));
+		}
+	}
 	public String execute(){
 		CustomerServiceImpl cs=new CustomerServiceImpl();
 		cs.setDao(new CustomerDAOImpl());
@@ -43,6 +50,7 @@ public class RegisterAction {
 			return "regsuccess";
 		} catch (RegisterException e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			return "regfail";
 		}

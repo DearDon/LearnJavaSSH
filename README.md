@@ -67,9 +67,9 @@ ActionContext:Action上下文,也被人称为广义值栈,是OGNL所能访问的
 PS:课本上SSH这三部分每部分的章节都是第1章开始起头，为了仓库备份命名方便，改了章节命名，接上之前章节，该部分从第15章开始。
 ####chapter15
 hibernate框架是ORM(Object-Ralational Mapping)框架，流程结构相对比较简单。该框架主要要求用户提供3部分文件(po类,hbm.xml映射文件,cfg.xml或properties配置文件)即可运行，PO(Persistent Objects)是可持久化类，用来代表要操作的数据库中的表单内容，PO对应的hbm.xml指明PO与数据库中哪个表的哪些字段对应，而cfg.xml或properties文件则配置了如数据库连接帐号密码、驱动等配置参数。前面提到不同IDE下利用hibernate开发操作有差别，但是hibernate的原理是相通的，只要提供了前面说的那3个部分和jar包，肯定就能运行。主要是那3个文件手工编写都比较困难，又容易出错，所以一编利用相关的插件工具以简化生成过程(如正逆向工程)，不同IDE下这工具有些许差别。Eclipse和MyEclipse两个IDE所用的简化hibernate开发的插件工具不同，导致很多操作有区别。</br>
-####chapter16
 该章试写了第一个Hibernate框架的程序，果然第一步问题多多，主要出现了两个问题。解决后该程序成功运行了。</br>
 第一个问题首先是开发需要的插件及使用方法，关于eclipse下hibernate插件安装(MyEclipse中集成了开发插件，不用装)可参考一条百度经验[Eclipse 在线配置 Hibernate Tools](http://jingyan.baidu.com/article/db55b609959d154ba20a2f5d.html),利用该插件配置cfg.xml及逆向工程生成po类和hbm.xml映射文件的方法(逆向工程的操作也与在MyEclipse中有差别)可参考csdn的一篇文章[eclipse从数据库逆向生成Hibernate实体类](http://blog.csdn.net/wangpeng047/article/details/6877720)。至此,Eclipse下开发hibernate的插件及利用该插件生成所必须的三部分文件都弄好了，向工程中导入Hibernate必要的jar包就可以用了(MyEclipse中默认导入了，不用再导入)。啰嗦一句，在新环境或新工具在使用一种技术要抓住该技术的关键原理(如此处hibernate的三个主要部分)，这样就不怕找不着方向了。我下的Hibernate4.3版本，教材中用的是3.X版本，这个版本差异带来了之后的第二个问题。</br>
 前面的第一个问题是Eclipse和MyEclipse环境不同导致的，第二个问题是由Hibernate版本不同导致的，4.3版本居然不兼容3.x的版本，在该版本中某些旧版本的方法已经被废除了~|~。在hibernate操作数据库的时候要新建SessionFacroty类的对象，在教材中(Hibernate4.0之前的旧版)中是对Configuration类的对象,设对象名为configuration，用configuration.buildSessionFactory()便可返回一个SessionFacroty类的对象。但buildSessionFactory()方法在4.0版后便被废除了。上网查到了解决办法，说是4以后版本提供了ServiceRegistry来取代之前的方法，具体可见两个网页[Hibernate4中buildSessionFactory方法废弃问题。](http://blog.csdn.net/iaiti/article/details/9211905)和[Hibernate SessionFactory Example](http://www.roseindia.net/hibernate/hibernate4/HibernateSessionFactory.shtml)。两个网页说的方法一样，可一试，居然又提示这两网页所使用的方法中某方法被抛弃了，又上网查，发现在4.3版ServiceRegistry这种取得SessionFactory的方法也被抛弃了，用了另外的方式来实现(改动太快了...),找到了4.3版对应的更新替代方法(用了StandardServiceRegistryBuilder类)[Is buildSessionFactory() deprecated in hibernate 4?](http://stackoverflow.com/questions/8621906/is-buildsessionfactory-deprecated-in-hibernate-4)。终于成功利用教材上的测试数据库功能代码操作数据库。关于第2个问题说下感想，对于这种问题解决必须要看控制台的错误提示以及IDE提供的源码文件的错误或警告(如何用IDE的话)，然后见机行事，根据线索查找资料。</br>
-PS:为保证隐私，控制台输出的数据库操作语句对表单数据的value统一用"?"代替显示了，开始还以为是编码有问题，mysql与输入编码不同，不识别之类的问题，发现多虑了，只是为隐私考虑。
-
+PS:为保证隐私，控制台输出的数据库操作语句对表单数据的value统一用"?"代替显示了，开始还以为是编码有问题，mysql与输入编码不同，不识别之类的问题，发现多虑了，只是为隐私考虑。</b>
+PS:用Egit直接从Eclipse往github上put刚更新的内容(chpater15)时老是卡着不动，又看不到详情，以为是哪里出问题，还差点重装或重写代码了。后想着试试直接用windows下的git尝试push，不用集
+成的Egit,发现挺好用的，而且push的时候有显示速度，这下看明白了，是https传输比较慢，耐心等了等，成功传上去了。

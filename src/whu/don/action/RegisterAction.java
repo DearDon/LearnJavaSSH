@@ -1,6 +1,6 @@
 package whu.don.action;
 
-import whu.don.dao.CustomerDAOImpl;
+import whu.don.dao.CustomerDAOHibImpl;
 import whu.don.exception.RegisterException;
 import whu.don.service.CustomerServiceImpl;
 import whu.don.vo.Customer;
@@ -36,7 +36,7 @@ public class RegisterAction extends ActionSupport {
 		this.address = address;
 	}
 	public void validate(){
-		CustomerDAOImpl dao=new CustomerDAOImpl();
+		CustomerDAOHibImpl dao=new CustomerDAOHibImpl();
 		Customer c=dao.selectByName(custname);
 		if(c!=null){
 			this.addFieldError("custname",this.getText("custname.exist"));
@@ -44,7 +44,7 @@ public class RegisterAction extends ActionSupport {
 	}
 	public String execute(){
 		CustomerServiceImpl cs=new CustomerServiceImpl();
-		cs.setDao(new CustomerDAOImpl());
+		cs.setDao(new CustomerDAOHibImpl());
 		try {
 			cs.register(new Customer(custname,pwd,age,address));
 			return "regsuccess";

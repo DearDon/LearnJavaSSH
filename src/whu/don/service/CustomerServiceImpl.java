@@ -3,7 +3,7 @@ package whu.don.service;
 import java.util.List;
 
 import whu.don.dao.CustomerDAO;
-import whu.don.dao.CustomerDAOImpl;
+import whu.don.dao.CustomerDAOHibImpl;
 import whu.don.exception.RegisterException;
 import whu.don.vo.Customer;
 
@@ -40,10 +40,10 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<Customer> viewAll(){
 		return dao.selectAll();
 	}
-	
+	/*
 	public static void main(String[] args){
 		CustomerServiceImpl cs=new CustomerServiceImpl();
-		cs.setDao(new CustomerDAOImpl());
+		cs.setDao(new CustomerDAOHibImpl());
 		boolean flag=cs.login("ETC", "123");
 		System.out.println(flag);
 		
@@ -67,4 +67,5 @@ public class CustomerServiceImpl implements CustomerService{
 			
 		}
 	}
+	*/
 }

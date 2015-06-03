@@ -70,6 +70,28 @@ hibernate框架是ORM(Object-Ralational Mapping)框架，流程结构相对比�
 该章试写了第一个Hibernate框架的程序，果然第一步问题多多，主要出现了两个问题。解决后该程序成功运行了。</br>
 第一个问题首先是开发需要的插件及使用方法，关于eclipse下hibernate插件安装(MyEclipse中集成了开发插件，不用装)可参考一条百度经验[Eclipse 在线配置 Hibernate Tools](http://jingyan.baidu.com/article/db55b609959d154ba20a2f5d.html),利用该插件配置cfg.xml及逆向工程生成po类和hbm.xml映射文件的方法(逆向工程的操作也与在MyEclipse中有差别)可参考csdn的一篇文章[eclipse从数据库逆向生成Hibernate实体类](http://blog.csdn.net/wangpeng047/article/details/6877720)。至此,Eclipse下开发hibernate的插件及利用该插件生成所必须的三部分文件都弄好了，向工程中导入Hibernate必要的jar包就可以用了(MyEclipse中默认导入了，不用再导入)。啰嗦一句，在新环境或新工具在使用一种技术要抓住该技术的关键原理(如此处hibernate的三个主要部分)，这样就不怕找不着方向了。我下的Hibernate4.3版本，教材中用的是3.X版本，这个版本差异带来了之后的第二个问题。</br>
 前面的第一个问题是Eclipse和MyEclipse环境不同导致的，第二个问题是由Hibernate版本不同导致的，4.3版本居然不兼容3.x的版本，在该版本中某些旧版本的方法已经被废除了~|~。在hibernate操作数据库的时候要新建SessionFacroty类的对象，在教材中(Hibernate4.0之前的旧版)中是对Configuration类的对象,设对象名为configuration，用configuration.buildSessionFactory()便可返回一个SessionFacroty类的对象。但buildSessionFactory()方法在4.0版后便被废除了。上网查到了解决办法，说是4以后版本提供了ServiceRegistry来取代之前的方法，具体可见两个网页[Hibernate4中buildSessionFactory方法废弃问题。](http://blog.csdn.net/iaiti/article/details/9211905)和[Hibernate SessionFactory Example](http://www.roseindia.net/hibernate/hibernate4/HibernateSessionFactory.shtml)。两个网页说的方法一样，可一试，居然又提示这两网页所使用的方法中某方法被抛弃了，又上网查，发现在4.3版ServiceRegistry这种取得SessionFactory的方法也被抛弃了，用了另外的方式来实现(改动太快了...),找到了4.3版对应的更新替代方法(用了StandardServiceRegistryBuilder类)[Is buildSessionFactory() deprecated in hibernate 4?](http://stackoverflow.com/questions/8621906/is-buildsessionfactory-deprecated-in-hibernate-4)。终于成功利用教材上的测试数据库功能代码操作数据库。关于第2个问题说下感想，对于这种问题解决必须要看控制台的错误提示以及IDE提供的源码文件的错误或警告(如何用IDE的话)，然后见机行事，根据线索查找资料。</br>
-PS:为保证隐私，控制台输出的数据库操作语句对表单数据的value统一用"?"代替显示了，开始还以为是编码有问题，mysql与输入编码不同，不识别之类的问题，发现多虑了，只是为隐私考虑。</b>
-PS:用Egit直接从Eclipse往github上put刚更新的内容(chpater15)时老是卡着不动，又看不到详情，以为是哪里出问题，还差点重装或重写代码了。后想着试试直接用windows下的git尝试push，不用集
-成的Egit,发现挺好用的，而且push的时候有显示速度，这下看明白了，是https传输比较慢，耐心等了等，成功传上去了。
+PS:为保证隐私，控制台输出的数据库操作语句对表单数据的value统一用"?"代替显示了，开始还以为是编码有问题，mysql与输入编码不同，不识别之类的问题，发现多虑了，只是为隐私考虑。</br>
+PS:用Egit直接从Eclipse往github上put刚更新的内容(chpater15)时老是卡着不动，又看不到详情，以为是哪里出问题，还差点重装或重写代码了。后想着试试直接用windows下的git尝试push，不用集成的Egit,发现挺好用的，而且push的时候有显示速度，这下看明白了，是https传输比较慢，耐心等了等，成功传上去了。
+###log07(2015/06/03):
+继续学习hibernate框架，这一次把hibernate框架学完了，并上传了整合了hibernate和struts2的最终工程，并保存为标签chapter22。因为这框架前一章是在学院电脑做的，拷到自己电脑上运行的时候居然就出错了，但是不管是Web服务器还是Mysql或jdk,Eclipse等等环境都是一样的版本，折腾了很久才发现问题在hibernate包导入的方式上不恰当。在整个hibernate的学习过程中，两次运行出问题，都是由于其jar包的导入问题。在此统一记录。</br>
+第一次是将学院电脑上应用Hibernate的Java工程尝试在自己电脑上运行，出错提醒某hibernate的jar包有问题，不能用。可仔细查看，该jar包确实已经通过新建了一个library库，并将hibernate的jar包都导入进去了。为此做了多个尝试，发现两个线索:a,用一个能正常运行的使用了hibernate的Java工程做试验，在jre的默认lib路径中再加入hibernate的jar包后(并没有删除原来工程中导入的hibernate的jar包)，本来能正常运行的却出错了，提示该包中的类找不到用不了。原来工程中导入的该包没删，还在jre的默认lib路径又拷贝进去了一份，居然反而说找不到该包；b,第二个线索是在一个java工程里，hibernater的jar包用新建一个user库(并设为系统库)，将hibernate的包导入该库，运行时提示用不了这些包中的类，出错。然后将该库删除，不通过库而直接导入hibernate的jar包，工程即可正常运行。以上a,b两个线索的共同点是，当hibernate的jar包导入了系统默认的classpath路径(a中jre的lib下,b中将user库设置为了系统库)时便会出错。猜想应该是有权限的问题，在系统路径下的hibernate的jar包虽然能找到，但是要使用时权限不足，会被拒绝。所以写代码时并没有提示说导入的包找不到，在编译运行时却提示用不了。并且程序会优先在系统路径找所需要的包，而不是工程中的非系统路径，所以在情况a中虽然工程中任然有所需要的包，但是却优先使用在系统路径(jre的lib)中找到，即使最后权限问题无法使用也无法用另一份备用的。所以综上，都是因为权限问题，找到了最后却无权用不了，且包重复时优先使用系统路径下的。为了验证猜想，尝试了在非系统路径下重复导入一个jar包(mysql的驱动包同时导入apache库下和其它非系统库中)，运行发现没有任何问题，证明了主要原因是系统库的权限。第二次验证在b的情况下将hibernate的库设为非系统库，再将jar包导入该库，发现程序就能成功运行，和之前唯一的差别就是工程中新建的hibernate库没有设为系统库，进一步证明了权限导致的问题。</br>
+第二次是在hibernate的最后一章，在web工程中使用hibernate时，因为之前都是用的java工程来学习尝试，发现用于web工程时又出现了问题。在该web工程中导入hibernate的jar包时是仍然是通过在java部分建立了一个hibernate库(没有设为系统库)，并导入所需java包，运行时却出错，提示找不到所需的类。将该hibernate库删除，尝试将hibernate的jar包拷贝到web项目里专门放用户自己jar包的lib下，运行成功。这应该又是权限问题，猜想web服务器没有权限调用其java部分的用户自建库里的jar包(够奇怪)。</br>
+以上两次出现的应用hibernate的问题根源都是在其jar包导入方式不恰当，没有正确的权限，所以以后出现类似状况(已经导入包，却提示找不到相关类，源码编写时IDE没有提示问题)，不要盲目找自己源码的问题，很有可能是jar包导入方式导致的权限问题，尝试用别的方式导入。
+####chapter16
+该部分对应原书hibernate部分的第二章，该章系统介绍了该框架的核心概念。之前说该框架必须的三大部分为持久化类(PO)，类与数据库表的映射文件，数据库连接相关的配置文件。该部分介绍了用POJO编程模式实现PO类的规范，如要求public修饰的无参构造方法，与主键对应的标识属性，属性都为private并提供set,get方法。映射文件介绍了其中常用的元素(class,id等)及多表关联需要的subclass等元素。配置文件说了hibernate.properties与hibernate.cfg.xml的等价性，且后者优先级高于前者，并介绍了设置使用非自带连接池(如C3P0连接池)的方法。除该三大部分，还介绍了表与PO类关联时可能处于的三种状态——瞬时状态，持久状态，胶管状态，及所表示的操作关系。最后简单介绍了HOL语句，它是设计为面向对象操作数据库的语句，其底层是用sql实现的。
+####chapter17
+该章详细介绍了HQL语言，如全部属性查找，部分条件查找，对查找结果用聚集函数分析(如求和等)，对查找返回对象换一定规则排序，分组或子查询。
+####chapter18
+该章介绍了一种表与类的映射设计方式——1张表映射多个类的情况，这称为粒度设计。按目的不同又分为基于设计的粒度设计和基于性能的粒度设计两种。前者是考虑到表中各元素的属性间的逻辑关系，进行分类；后者是从数据库读取操作的性能考虑，如使用频率高的元素分为一类，低的分为另一类。并将分好的每一类分别对应一个PO实体类以实现逻辑清晰或效能更好。
+####chapter19
+该章讲存在多张表(多个实体类)时它们之间又相互关联时的问题。利用主外键、连接表等概念可使它们相互关联起来引用。按由谁引用谁的方向可分为单向关联和双向关联，按关联的数量又可分为一(或多)对一(或多)四种情况。并介绍了这四种情况下如何利用主外键或连接表的技术实现各种表间的关联。
+####chapter20
+前章各表(实体类)是关联关系时如何实现，这章介绍它们之间是继承关系时的应对策略。因为hibernate借助HQL用面向对象的方式操作数据库，借助这一中间层的转换使得没有面向对象特性的数据库在上层有继承等特性。在有继承关系时，根据不同表与类的设计而有多种实现方式，分为TPS(Table Per SubClass),TPH(Table Per Class Hierarchy),TPC(Table per Concrete Class)。TPS是设计为主表与PO类中父类对应，从表分别对应子类。TPH是仅设计一张表，该表包含了各子对象映射的属性，使用标识字体区分不同对象，使得一张表可对应于多个PO类使用。TPC是设计多个表分别对应各子类，每个表包单独包含子对象类的所有属性，而各表间独立。这三种方式都仅需要一个父类与表对应的映射文件，这种继承关系是在PO类的设计中继承体现的，表其实只是与PO类对应，表间本质没有继承可言。此外，由于HQL面向对象特性，可实现多态查询。
+####chapter21
+这部分介绍提升hibernate性能的一些技巧，如批量操作时及时清理缓存(session.flush()和session.clear())或不进行缓存(StatelessSession接口)以防止内存溢出的方法。不用延迟加载(默认为延迟)实现自动查询关联实例。另外batch-size属性设置可实现减少有关联的实例查询过程中查询的语句条数。</br>
+在该章的优化试验中，出现过一个问题，提示一对多的关联表的Address.hbm.xml解析失败，细查发现是其中有一条<cache usage="read-write"/>语句，删掉后将没问题了，不知道该语句有什么作用。
+####chapter22
+该部分对应用hibernate的最后一章即第八章。这一章在标签为chapter14的git版本项目基础上，将hibernate框架加入进去，由于二者没有重叠部分，分别处理项目中不同层次，整合很简单。但hibernate的整合出现了之前说的导入jar包的方式不对的第二次问题，算是一点小波折。此外，还暴露了一个问题，就是使用Egit并不是很熟练，merge时容易出现confilict不确定如何解决，今天出现冲突时将冲动的文件改乱了，导致组合后出现了很多问题。最终还是手动将dev分支的文件拷贝到了master分支~~。上网查发现merge或push时出现冲突的问题很多人问，看来是版本控制里一个比较麻烦的问题。最终将整合了struts2和hibernate框架的工程保存为了chapter22标签。
+####Hibernate框架总结
+这个框架是针对数据库操作的，其实就是对JDBC方式的一个整合改进。所以它可以用在任何JDBC可用的工程中，如java工程，而不限于web工程。该框架的概念很好理解，自己学习时主要的问题基本都出在了非框架内容部分(如git的操作问题,jar包的导入方式问题)。下一步就可以开始Spring框架了~~。
+

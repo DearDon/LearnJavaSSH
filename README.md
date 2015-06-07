@@ -95,16 +95,17 @@ PS:用Egit直接从Eclipse往github上put刚更新的内容(chpater15)时老是�
 ####Hibernate框架总结
 这个框架是针对数据库操作的，其实就是对JDBC方式的一个整合改进。所以它可以用在任何JDBC可用的工程中，如java工程，而不限于web工程。该框架的概念很好理解，自己学习时主要的问题基本都出在了非框架内容部分(如git的操作问题,jar包的导入方式问题)。下一步就可以开始Spring框架了~~。
 ###log08(2015/06/06):
+自己学习spring的时候坚持了使用eclipse，没有使用Myeclipse插件或其它插件，因为觉得它们对编写程序方面没有多大帮助，仅是导入jar包更简便。觉得用不必要的插件破坏了简单美。不过虽然没用插件也把程序都完成了，但是在一些章节还是出现了些比较麻烦的缺少jar包的问题，从报错的类名字很难看出要导入哪个包，上网查询才找到缺少的jar包名。如有的章节程序所需要的jar包根本不在spring的发行包的里，要单独下载，这问题在chapter25关于AOP的部分出现了(具体见chapter25的记录)。还有版本的更新的问题，包名可能会更改。版本差异导致的问题在hibernate部分遇到了很多，spring部分的chapter27也遇到了(具体看chapter27的记录)。看到谷歌一个人的回复说"In spring 3 the whole jar structure has been re-organized. There is no all-in-one spring.jar as before. You have to pick what you need."所以说明了spring的jar包是比较麻烦，插件确实一定程序减轻了寻找各模块所需jar包的工作，是否使用插件看自己需求吧。
 ####chapter23
 这一部分关于spring的概念。spring框架为了设计为无侵入式(即应用程序可最小程度依赖它，只挑选需要的功能模块导入)，将spring框架按功能分为七个模块，分别对应解决不同问题，使用时可按需求导入需要模块的jar包。这样解决了侵入的问题，但是这种精细分类导致对依赖包的判断变复杂，难以精准辨别自己所用模块需要的包(所以很多开发者选择用各种spring插件，使其自动选择依赖包，自己做AOP那章的程序时就有几个包一直没找到，费了不少劲)。接着介绍了使用spring的一般流程，即导入必要包，正确配置applicationContext.xml文件，在程序中简单几条语句即可调用spring的IoC,AOP等功能。spring框架的七个模块分别为Core(主要是Ioc技术)，AOP(面向切面编程),ORM,DAO,Web,Context,WebMVC，其中IoC和AOP是spring最重要核心的技术。
 ####chapter24
 这部分详细讲解core模块，即Ioc控制反转，也被称为依赖注入。IoC可实现对初始化复杂对象的统一管理，将bean对象的实例化和配置交给容器完成。这项技术的基础是反射技术和自省技术，反射可使得程序执行时动态地执行类的方法(构造方法)以获得类的对象，动态是指通过变量动态告诉程序要创建对象的类名，自省是指不知道类中有何具体属性的情况下设置它们的值。它们都利用了JavaBean类的规范。该章详细介绍了如何使用IoC,其实现过程及底层技术原理，并对何时使用IoC给了建议。在这一章尝试写了第一个使用Spring的程序，第一个程序编写没有之前hibernate第一个程序一样遇到各种麻烦，相对比较顺利。因为插件在编写程序方面没什么帮助，不像hibernate插件可以通过正逆向工程帮助编写配置文件或持久化类以提高开发效率，主要是帮助整理依赖包。我没有用spring的插件，自己单独下了spring的jar包，并上网查了IoC模块所需要的特定jar包，在hibernate部分经历的jar包导入问题的经验帮助自己顺利地完成了第一个使用IoC技术的程序。
 ####chapter25
-该章讲解AOP(Aspect Oriented Program)面向切面编程，它可将通用功能与业务模块分离，使得在程序任意方法处(称为切面)可插入这些通用功能，使用可全局管理这些功能更方便。通过该技术可设置在一个方法调用的前，后或调用期间执行自己设定的通用功能，也使得程序结构更清晰。
+该章讲解AOP(Aspect Oriented Program)面向切面编程，它可将通用功能与业务模块分离，使得在程序任意方法处(称为切面)可插入这些通用功能，使用可全局管理这些功能更方便。通过该技术可设置在一个方法调用的前，后或调用期间执行自己设定的通用功能，也使得程序结构更清晰。该章的程序在尝试时出现了一个问题，错误提示说找不到某些类，应该缺少了jar包，看错误信息，其中有AOP的关键字，猜想应该是spring提供包中与AOP有关的部分，可全部尝试了也依然没有该找不到的类。最后上网查才发现该类根本不在spring提供的包中，需要单独下载，类名为aopalliance-1.0.jar，下载导入后程序一切正常。
 ####chapter26
 该章讲解spring模块中Web模块部分应用——整合struts2框架(注意spring框架的MVC模块是其自带的MVC框架，本书没有介绍spring自带的MVC框架，直接将流行的struts2框架整合进去)。该章介绍的整合案例是在struts2框架基础上将Action实例将由spring框架管理，用Ioc技术进行实例化和装配。完成了之前交友项目中struts2部分整合到spring中，为SSH三大框架完成该项目做铺垫。
 ####chapter27
-该章是讲DAO模块部分的应用——spring整合JDBC,它可使得JDBC的细节被隐藏起来，交由spring框架完成，使基于JDBC的数据库编程更简洁。
+该章是讲DAO模块部分的应用——spring整合JDBC,它可使得JDBC的细节被隐藏起来，交由spring框架完成，使基于JDBC的数据库编程更简洁。该部分程序用eclipse且不使用spring插件尝试时出现了一些问题，之后证实是jar包缺失的问题。当时console提示"The type org.springframework.dao.DataAccessException cannot be resolved. It is indirectly referenced"问题，当然是直接上网查该异常的类在哪个包中，应该是没有导入工程中，根据网上查到的说明在两篇CSDN的博文中([博文1](http://blog.csdn.net/wwwyuanliang10000/article/details/21396689)，[博文2](http://blog.csdn.net/u012010949/article/details/17261671))都表示缺少org.springframework.transaction-3.X.X.jar包，但在自己的spring发行版中没有看到该包，猜想要么是要单独下的包或理名字更改了.这时看到另一个[网页](http://www.cnblogs.com/fuckqq/p/4107203.html),说是少了spring-tx-3.2.2.RELEASE.jar包，该包在我下的spring发行版(3.2.0版)中有，导入后程序正常。再细看名字，tx发音与transaction很像，应该就是3.2.0版后该名改了名字了，之前的两篇CSDN文中提到的是3.1.1或3.0.X版。
 ####chapter28
 该章讲ORM模块应用——spring整合hibnate，因hibenate中常要声明并初始化sessionFactory对象，该对象非常合适用IoC进行实例配置。该章展示了本书交友系统项目的hibernate整合到spring框架的过程，也为后之后SSH三大框架整合完成该项目做铺垫。
 ####chapter29

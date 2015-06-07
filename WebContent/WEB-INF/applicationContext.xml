@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://localhost:3306/ssh"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="deng123"></property>
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>whu/don/vo/Customer.hbm.xml</value></list>
+		</property>
+	</bean>
+	
+	<bean id="hibTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<bean id="dao" class="whu.don.dao.CustomerDAOHibernateTemplateImpl">
+		<property name="hibTemplate">
+			<ref bean="hibTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="service" class="whu.don.service.CustomerServiceImpl">
+	     <property name="dao">
+	     	<ref bean="dao"/>
+	     </property>
+	</bean>
+		<bean id="LoginAction" class="whu.don.action.LoginAction" scope="prototype">
+		<property name="service">
+			<ref bean="service"/>
+		</property>
+	</bean>
+	<bean id="RegisterAction" class="whu.don.action.RegisterAction" scope="prototype">
+		<property name="service">
+			<ref bean="service"/>
+		</property>
+	</bean>
+	<bean id="ViewAllAction" class="whu.don.action.ViewAllAction" scope="prototype">
+		<property name="service">
+			<ref bean="service"/>
+		</property>
+	</bean>
+</beans>

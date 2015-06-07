@@ -3,7 +3,6 @@ package whu.don.service;
 import java.util.List;
 
 import whu.don.dao.CustomerDAO;
-import whu.don.dao.CustomerDAOHibImpl;
 import whu.don.exception.RegisterException;
 import whu.don.vo.Customer;
 
@@ -23,6 +22,14 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 	}
 	
+	public boolean testName(String custname){
+		Customer cust=dao.selectByName(custname);
+		if(cust!=null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public void register(Customer cust) throws RegisterException{
 		Customer c=dao.selectByName(cust.getCustname());
 		if(c==null){

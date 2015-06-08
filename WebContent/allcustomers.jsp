@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td>&nbsp;age</td>
 	<td>address&nbsp;</td>
 	</tr>
-	<c:forEach items="${allcustomers}" var="c">
+	<c:forEach items="${requestScope.list}" var="c">
 	<tr>
 	<td>${c.custname}</td>
 	<td>${c.age}</td>

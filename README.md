@@ -1,5 +1,5 @@
 # learnJavaSSH 
-这是一个用来2015年5月份学习SSH三大框架的仓库。
+这是一个用来记录2015年5月份学习SSH三大框架的仓库。
 
 由于版权原因，没有直接把随书源码传上来，仓库记录的是自己学习每章时改写的代码。 </br>
 下面写下学习过程的记录。学习基于电子工业出版社的《JavaEE主流开源框架》一书第一版。</br>
@@ -18,8 +18,10 @@ database ssh,其下table customer,包含custname(unique) char(20),pwd char(45),a
 
 #### chapter02
 首先说第二章，该章主要大致讲了下三类控制器，没有深入讲细节，这一章主要是用struts2框架实现 了用户登陆功能，以及在M层与mysql的交互(按功能共分为了action,dao,exception,service,vo五个包)，虽然该章没有深入讲struts2的内容，但项目的M层基本实现，跨出了第一步，在M层用JDBC连接了MYSQL，加入了不少包(dao,vo,exception)来规范完成这一功能，后面只要把该系统的注册和查看信息功能实现就行。</br>
+
 #### chapter03
 再来说下第三章，该章节深入讲了拦截器，其自定义的方式就是自己写个java类，实现struts2 API提供的拦截器接口，特别要重写该实现中的intercept方法。拦截器是在action调用前后搭配用的，在用java类实现了拦截器后，使用时要先在struts.xml中定义自定义的拦截器(栈)的名字，然后依旧在struts.xml中设置该拦截器(栈)要与哪个action搭配使用,所谓的拦截器栈就是一系列的拦截器按顺序组合在一起，调用时会依次进行调用。由于struts.xml中定义的包继承了struts-default.xml，默认是整个包内的action都使用了struts-default.xml中定义的defaultStack拦截器栈的。但当自己设置了某个action使用特定的拦截器时，想仍旧使用defaultStack就必须显示指定。</br>
+
 #### chapter04
 最后说一下第四章，这部分主要讲Action的，Action完成了表单参数封装，业务逻辑调用及根据业务层结果实现页面导航选择输出，可以说是控制层中工作最多的，而且基本都要用户自己实现。这里说实现是因为struts2API定义了Action的接口，但是由于提供的接口的默认功能很少，且基本没什么意义，所以也规定可以不实现该Action接口，而直接自己新建按一定规范要求写的类(要求完成表单变量的get,set等封闭功能，并且其中有个返回值为String的无参数方法，该方法默认名为execute)。当该Action规范类中的执行方法不为execute时(有时不想用该名，或该中有很多个完成不同功能的执行方法，不可能都叫execute)，在调用使用时必须显示说明方法名，这有两大类方法，第一类为在struts.xml中定义Action类名称与类名时同时设置method为该执行方法名，这种方法还能用通配符一次设置该类中多个执行方法的对应名称，第二类方法是在JSP文件中设置，这又分为两种小方法，一种是在表单的action名称设置处将action名称改为actionname!methodname的方式设置，另一种是表单的提交submit项中加入method参数设置。</br>
 
